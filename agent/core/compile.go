@@ -20,6 +20,7 @@ package core
 import (
 	//go:nolint
 	_ "encoding/base64"
+	_ "encoding/json"
 	_ "fmt"
 	_ "log"
 	_ "math"
