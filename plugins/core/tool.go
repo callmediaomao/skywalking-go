@@ -18,6 +18,8 @@
 package core
 
 import (
+	"encoding/json"
+	"fmt"
 	"net"
 	"os"
 	"runtime"
@@ -91,6 +93,24 @@ func IPV4() string {
 }
 
 func buildOSInfo() (props []*commonv3.KeyStringValuePair) {
+	swInstanceJson := os.Getenv("SW_INSTANCE_PROPERTIES_JSON")
+	if swInstanceJson != "" {
+		var data interface{}
+
+		err := json.Unmarshal([]byte(swInstanceJson), &data)
+		if err != nil {
+			fmt.Println("get SW_INSTANCE_PROPERTIES_JSON env error!!!")
+		} else {
+			for k, v := range data.(map[string]interface{}) {
+				kv := &commonv3.KeyStringValuePair{
+					Key:   k,
+					Value: v.(string),
+				}
+				props = append(props, kv)
+			}
+		}
+	}
+
 	processNo := ProcessNo()
 	if processNo != "" {
 		kv := &commonv3.KeyStringValuePair{

@@ -22,6 +22,7 @@ import (
 	_ "context"
 	_ "crypto/tls"
 	_ "crypto/x509"
+	_ "encoding/json"
 	_ "fmt"
 	_ "io"
 	_ "os"
